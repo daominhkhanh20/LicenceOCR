@@ -1,0 +1,7 @@
+opencv-python
+fastapi
+uvicorn
+pytorchyolo
+python-multipart
+Pillow
+vietocr
