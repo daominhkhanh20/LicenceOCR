@@ -50,6 +50,7 @@ class Trainer():
         self.checkpoint = config['trainer']['checkpoint']
         self.export_weights = config['trainer']['export']
         self.metrics = config['trainer']['metrics']
+        self.use_scheduler = config['trainer'].get('use_scheduler', False)
         logger = config['trainer']['log']
     
         if logger:
@@ -62,7 +63,8 @@ class Trainer():
         self.iter = 0
         
         self.optimizer = AdamW(self.model.parameters(), lr=1e-4,betas=(0.9, 0.98), eps=1e-09)
-        self.scheduler = CosineAnnealingLR(self.optimizer, T_max=self.num_iters)
+        if self.use_scheduler:
+            self.scheduler = CosineAnnealingLR(self.optimizer, T_max=self.num_iters)
 #        self.optimizer = ScheduledOptim(
 #            Adam(self.model.parameters(), betas=(0.9, 0.98), eps=1e-09),
 #            #config['transformer']['d_model'], 
@@ -356,7 +358,8 @@ class Trainer():
         torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1) 
 
         self.optimizer.step()
-        self.scheduler.step()
+        if self.use_scheduler:
+            self.scheduler.step()
 
         loss_item = loss.item()
 
