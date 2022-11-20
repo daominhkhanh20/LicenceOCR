@@ -62,7 +62,7 @@ class Trainer():
         self.iter = 0
         
         self.optimizer = AdamW(self.model.parameters(), lr=1e-4,betas=(0.9, 0.98), eps=1e-09)
-        self.scheduler = CosineAnnealingLR(self.optimizer)
+        self.scheduler = CosineAnnealingLR(self.optimizer, T_max=self.num_iters)
 #        self.optimizer = ScheduledOptim(
 #            Adam(self.model.parameters(), betas=(0.9, 0.98), eps=1e-09),
 #            #config['transformer']['d_model'], 
