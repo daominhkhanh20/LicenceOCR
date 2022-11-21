@@ -1,7 +1,15 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 opencv-python
 fastapi
 uvicorn
+torch==1.12.1+cpu 
+torchvision==0.13.1+cpu 
 pytorchyolo
 python-multipart
 Pillow
-vietocr
+einops
+gdown
+prefetch-generator
+imgaug
+lmdb
+PyYAML
