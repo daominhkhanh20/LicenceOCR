@@ -40,6 +40,7 @@ class ImgAugTransform:
     ],
         random_order=True),
     random_order=True)
+    
       
   def __call__(self, img):
     img = np.array(img)

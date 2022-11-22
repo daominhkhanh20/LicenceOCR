@@ -24,6 +24,7 @@ async def root():
 
 @app.post('/upload')
 async def receive_file(file: UploadFile = File(...)):
+    print(file.filename)
     image = read_imagefile(await file.read())
     plate, boxs = licence_plate(image)
     cv2.rectangle(image, (int(boxs[0]), int(boxs[1])), (int(boxs[2]), int(boxs[3])), (255, 0, 0), 2)

@@ -10,7 +10,7 @@ from vietocr.tool.config import Cfg
 config = Cfg.load_config_from_name('vgg_transformer')
 config['weights'] = 'ocr/weights/transformerocr.pth'
 config['cnn']['pretrained']=False
-config['vocab'] = 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789-.'
+config['vocab'] = 'ABCDEFGHKLMNPSTUVXYZ0123456789-.'
 config['device'] = torch.device("cpu")
 config['predictor']['beamsearch']=False
 model_detector = Predictor(config)
