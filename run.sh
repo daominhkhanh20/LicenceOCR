@@ -1,3 +1,4 @@
+pip install kaggle
 mkdir models 
 mv Model* models
 export KAGGLE_USERNAME="daominhkhanh"
