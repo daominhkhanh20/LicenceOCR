@@ -26,8 +26,9 @@ async def root():
 async def receive_file(file: UploadFile = File(...)):
     print(file.filename)
     image = read_imagefile(await file.read())
-    plate, boxs = licence_plate(image)
-    cv2.rectangle(image, (int(boxs[0]), int(boxs[1])), (int(boxs[2]), int(boxs[3])), (255, 0, 0), 2)
-    cv2.putText(image, plate, (int(boxs[0] - 5), int(boxs[1] - 5)),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 172, 5), 2)
+    plates, boxs = licence_plate(image)
+    for i in range(len(plates)):
+        cv2.rectangle(image, (int(boxs[i][0]), int(boxs[i][1])), (int(boxs[i][2]), int(boxs[i][3])), (255, 0, 0), 2)
+        cv2.putText(image, plates[i], (int(boxs[i][0] - 5), int(boxs[i][1] - 5)),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 172, 5), 2)
     res, img_png = cv2.imencode('.png', image)
     return StreamingResponse(io.BytesIO(img_png.tobytes()), media_type='image/png')

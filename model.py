@@ -10,7 +10,7 @@ from vietocr.tool.config import Cfg
 config = Cfg.load_config_from_name('vgg_transformer')
 config['weights'] = 'ocr/weights/transformerocr.pth'
 config['cnn']['pretrained']=False
-config['vocab'] = 'ABCDEFGHKLMNPSTUVXYZ0123456789-.'
+config['vocab'] = 'ABCDEFGHKLMNPSTUVXYZR0123456789-.'
 config['device'] = torch.device("cpu")
 config['predictor']['beamsearch']=False
 model_detector = Predictor(config)
@@ -29,8 +29,11 @@ def ocr(image):
 
 def licence_plate(image):
     boxes = detector(image)
-    x,y,x1,y1 = int(boxes[0][0]), int(boxes[0][1]), int(boxes[0][2]), int(boxes[0][3])
-    numpy_image = image[y:y1, x:x1,:]
-    imgage_ocr = Image.fromarray(np.uint8(numpy_image)).convert('RGB')
-    plate = ocr(image=imgage_ocr)
-    return plate, boxes[0]
+    plates = []
+    for i in range(len(boxes)):
+        x,y,x1,y1 = int(boxes[i][0]), int(boxes[i][1]), int(boxes[i][2]), int(boxes[i][3])
+        numpy_image = image[y:y1, x:x1,:]
+        imgage_ocr = Image.fromarray(np.uint8(numpy_image)).convert('RGB')
+        plate = ocr(image=imgage_ocr)
+        plates.append(plate)
+    return plates, boxes
