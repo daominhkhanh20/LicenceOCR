@@ -31,10 +31,10 @@ class Vocab():
             print(weight)
             
             self.weight_contribution = [weight[character] for character in chars]
-            self.weight_contribution.inset(0, 0)
-            self.weight_contribution.inset(0, max(self.weight_contribution))
-            self.weight_contribution.inset(0, max(self.weight_contribution))
-            self.weight_contribution.inset(0, 0)
+            self.weight_contribution.insert(0, 0.0005)
+            self.weight_contribution.insert(0, max(self.weight_contribution))
+            self.weight_contribution.insert(0, max(self.weight_contribution))
+            self.weight_contribution.insert(0, 0.0005)
             
             print(weight)
         else:
