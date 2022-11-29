@@ -74,7 +74,7 @@ class Trainer():
         if config['trainer'].get('use_label_smoothing', False):
             self.criterion = LabelSmoothingLoss(len(self.vocab), padding_idx=self.vocab.pad, smoothing=0.1)
         else:
-            self.criterion = nn.CrossEntropyLoss(weight=torch.Tensor(self.vocab.weight_contribution))
+            self.criterion = nn.CrossEntropyLoss(weight=torch.Tensor(self.vocab.weight_contribution).to(config['device']))
         
         transforms = None
         if self.image_aug:
