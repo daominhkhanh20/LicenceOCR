@@ -34,5 +34,5 @@ async def receive_file(file: UploadFile = File(...)):
     return StreamingResponse(
         io.BytesIO(img_png.tobytes()), 
         media_type='image/png',
-        headers={'data': ','.join(plates)}
+        headers={'data': '[' +','.join(plates) + ']'}
         )

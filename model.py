@@ -13,6 +13,7 @@ config['cnn']['pretrained']=False
 config['vocab'] = 'ABCDEFGHKLMNPSTUVXYZR0123456789-.'
 config['device'] = torch.device("cpu")
 config['predictor']['beamsearch']=False
+config['mode'] = 'inference'
 model_detector = Predictor(config)
 
 device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
