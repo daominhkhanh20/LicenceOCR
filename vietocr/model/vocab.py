@@ -28,6 +28,7 @@ class Vocab():
         self.i2c = {i+4:c for i, c in enumerate(chars)}
         if path_train is not None:
             weight = parser_cnt(path_train)
+            print(weight)
             
             self.weight_contribution = [weight[character] for character in chars]
             self.weight_contribution.inset(0, 0)
