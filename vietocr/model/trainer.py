@@ -10,6 +10,7 @@ from vietocr.loader.aug import ImgAugTransform
 
 import yaml
 import torch
+from torch import nn 
 from vietocr.loader.dataloader_v1 import DataGen
 from vietocr.loader.dataloader import OCRDataset, ClusterRandomSampler, Collator
 from torch.utils.data import DataLoader
@@ -70,8 +71,10 @@ class Trainer():
 #            #config['transformer']['d_model'], 
 #            512,
 #            **config['optimizer'])
-
-        self.criterion = LabelSmoothingLoss(len(self.vocab), padding_idx=self.vocab.pad, smoothing=0.1)
+        if config['trainer'].get('use_label_smoothing', False):
+            self.criterion = LabelSmoothingLoss(len(self.vocab), padding_idx=self.vocab.pad, smoothing=0.1)
+        else:
+            self.criterion = nn.CrossEntropyLoss(weight=torch.Tensor(self.vocab.weight_contribution))
         
         transforms = None
         if self.image_aug:

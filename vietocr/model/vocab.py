@@ -1,5 +1,5 @@
 class Vocab():
-    def __init__(self, chars):
+    def __init__(self, chars, weight: dict = None):
         self.pad = 0
         self.go = 1
         self.eos = 2
@@ -10,6 +10,10 @@ class Vocab():
         self.c2i = {c:i+4 for i, c in enumerate(chars)}
 
         self.i2c = {i+4:c for i, c in enumerate(chars)}
+        if weight is not None:
+            self.weight_contribution = [weight[character] for character in chars]
+        else:
+            self.weight_contribution = None
         
         self.i2c[0] = '<pad>'
         self.i2c[1] = '<sos>'
