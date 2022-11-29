@@ -118,10 +118,7 @@ def translate(img, model, max_seq_length=128, sos_token=1, eos_token=2):
 
 
 def build_model(config):
-    if config['mode'] != 'inference':
-        vocab = Vocab(config['vocab'], path_train = f"{config['dataset']['data_root']}/{config['dataset']['train_annotation']}")
-    else:
-        vocab = Vocab(config['vocab'])
+    vocab = Vocab(config['vocab'], config=config)
     device = config['device']
     
     model = VietOCR(len(vocab),

@@ -31,7 +31,7 @@ class Vocab():
         path_train = os.path.join(root_path, train_file)
         if os.path.isfile(path_train):
             weight = parser_cnt(path_train)
-            weight_coef = config.get('weight_coef', 1)
+            weight_coef = config['trainer'].get('weight_coef', 1)
             
             self.weight_contribution = [weight_coef * weight[character] for character in chars]
             self.weight_contribution.insert(0, 0.0005)
