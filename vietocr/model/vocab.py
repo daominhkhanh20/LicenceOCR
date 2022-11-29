@@ -15,7 +15,7 @@ def parser_cnt(path):
     return result
 
 class Vocab():
-    def __init__(self, chars, path_train: str = None):
+    def __init__(self, chars, config: dict):
         self.pad = 0
         self.go = 1
         self.eos = 2
@@ -26,11 +26,14 @@ class Vocab():
         self.c2i = {c:i+4 for i, c in enumerate(chars)}
 
         self.i2c = {i+4:c for i, c in enumerate(chars)}
-        if path_train is not None:
+        root_path = config['dataset']['data_root']
+        train_file = config['dataset']['train_annotation']
+        path_train = os.path.join(root_path, train_file)
+        if os.path.isfile(path_train):
             weight = parser_cnt(path_train)
-            print(weight)
+            weight_coef = config.get('weight_coef', 1)
             
-            self.weight_contribution = [weight[character] for character in chars]
+            self.weight_contribution = [weight_coef * weight[character] for character in chars]
             self.weight_contribution.insert(0, 0.0005)
             self.weight_contribution.insert(0, max(self.weight_contribution))
             self.weight_contribution.insert(0, max(self.weight_contribution))
