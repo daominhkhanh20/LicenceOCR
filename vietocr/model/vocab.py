@@ -1,5 +1,21 @@
+import itertools
+import os
+from collections import Counter
+
+def parser_cnt(path):
+    with open(path, 'r') as file:
+        data = file.readlines()
+    data = [value.split('\t')[1].strip() for value in data]
+    data = [list(value) for value in list(set(data))]
+    list_chars = itertools.chain(*data)
+    result = dict(Counter(list_chars))
+    sum_value = sum([1/value for value in result.values()])
+    for key in result:
+        result[key] = (1 / result[key]) / sum_value
+    return result
+
 class Vocab():
-    def __init__(self, chars, weight: dict = None):
+    def __init__(self, chars, path_train: str = None):
         self.pad = 0
         self.go = 1
         self.eos = 2
@@ -10,8 +26,10 @@ class Vocab():
         self.c2i = {c:i+4 for i, c in enumerate(chars)}
 
         self.i2c = {i+4:c for i, c in enumerate(chars)}
-        if weight is not None:
+        if path_train is not None:
+            weight = parser_cnt(path_train)
             self.weight_contribution = [weight[character] for character in chars]
+            print(weight)
         else:
             self.weight_contribution = None
         
