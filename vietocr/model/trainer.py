@@ -58,7 +58,10 @@ class Trainer():
             self.logger = Logger(logger) 
 
         if pretrained:
-            weight_file = download_weights(**config['pretrain'], quiet=config['quiet'])
+            if os.path.isfile(config['pretrain']):
+                weight_file = config['pretrain']
+            else:  
+                weight_file = download_weights(**config['pretrain'], quiet=config['quiet'])
             self.load_weights(weight_file)
 
         self.iter = 0
